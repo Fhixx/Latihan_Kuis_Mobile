@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_latihan_kuis_mobile/pages/detail.dart';
 import '../models/animals_data.dart';
 import '../pages/login.dart';
 class HomePage extends StatelessWidget {
@@ -64,7 +65,24 @@ class AnimalCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
+    return InkWell(
+      borderRadius: BorderRadius.circular(12),
+
+      // =================================
+      // AKSI KETIKA CARD DITEKAN
+      // =================================
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => DetailPage(
+              animal: animal,
+            ),
+          ),
+        );
+      },
+    
+    child: Card(
       elevation: 1,
       margin: EdgeInsets.zero,
       color: const Color(0xFFFFF9FF),
@@ -82,9 +100,7 @@ class AnimalCard extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
 
-            // =========================
             // IMAGE
-            // =========================
             SizedBox(
               height: 92,
               width: double.infinity,
@@ -123,9 +139,7 @@ class AnimalCard extends StatelessWidget {
 
             const SizedBox(height: 6),
 
-            // =========================
             // NAMA HEWAN
-            // =========================
             Text(
               animal.name,
               maxLines: 1,
@@ -139,9 +153,7 @@ class AnimalCard extends StatelessWidget {
 
             const SizedBox(height: 2),
 
-            // =========================
             // TYPE
-            // =========================
             Text(
               animal.type,
               style: const TextStyle(
@@ -152,9 +164,7 @@ class AnimalCard extends StatelessWidget {
 
             const SizedBox(height: 6),
 
-            // =========================
             // HABITAT
-            // =========================
             Wrap(
               spacing: 5,
               runSpacing: 4,
@@ -189,6 +199,7 @@ class AnimalCard extends StatelessWidget {
           ],
         ),
       ),
+    )
     );
   }
 }
