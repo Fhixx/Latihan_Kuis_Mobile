@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_latihan_kuis_mobile/models/animals_data.dart';
+import 'package:flutter_application_latihan_kuis_mobile/pages/home.dart';
 
 
 class LoginPage extends StatefulWidget {
@@ -24,9 +25,9 @@ class _LoginPageState extends State<LoginPage> {
         isLoggiedIn = true;
       });
       
-      // Navigator.pushReplacement(context, 
-      //   MaterialPageRoute(builder: (context) => Root(username: username))
-      // );
+      Navigator.pushReplacement(context, 
+        MaterialPageRoute(builder: (context) => HomePage())
+      );
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
