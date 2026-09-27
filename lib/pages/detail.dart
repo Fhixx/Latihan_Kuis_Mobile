@@ -5,10 +5,7 @@ import '../models/animals_data.dart';
 class DetailPage extends StatelessWidget {
   final Animal animal;
 
-  const DetailPage({
-    super.key,
-    required this.animal,
-  });
+  const DetailPage({super.key, required this.animal});
 
   @override
   Widget build(BuildContext context) {
@@ -16,17 +13,14 @@ class DetailPage extends StatelessWidget {
       backgroundColor: const Color(0xFFFFF8FF),
 
       appBar: AppBar(
-        backgroundColor: Colors.black45,
+        backgroundColor: Colors.black87,
         elevation: 0,
 
         leading: IconButton(
           onPressed: () {
             Navigator.pop(context);
           },
-          icon: const Icon(
-            Icons.arrow_back,
-            color: Colors.white,
-          ),
+          icon: const Icon(Icons.arrow_back, color: Colors.white),
         ),
 
         title: Text(
@@ -44,40 +38,38 @@ class DetailPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
             // IMAGE
             SizedBox(
               width: double.infinity,
               height: 150,
-              child: Image.network(
-                animal.image,
-                fit: BoxFit.cover,
 
-                errorBuilder: (context, error, stackTrace) {
-                  return const Center(
-                    child: Icon(
-                      Icons.image_not_supported,
-                      size: 50,
-                      color: Colors.grey,
-                    ),
-                  );
-                },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
 
-                loadingBuilder: (
-                  context,
-                  child,
-                  loadingProgress,
-                ) {
-                  if (loadingProgress == null) {
-                    return child;
-                  }
+                child: Image.network(
+                  animal.image,
+                  fit: BoxFit.cover,
 
-                  return const Center(
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  );
-                },
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Center(
+                      child: Icon(
+                        Icons.image_not_supported,
+                        size: 50,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
+
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) {
+                      return child;
+                    }
+
+                    return const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    );
+                  },
+                ),
               ),
             ),
 
@@ -97,20 +89,14 @@ class DetailPage extends StatelessWidget {
 
             Text(
               'Height : ${animal.height}',
-              style: const TextStyle(
-                fontSize: 11,
-                color: Color(0xFF555555),
-              ),
+              style: const TextStyle(fontSize: 11, color: Color(0xFF2D2D2D)),
             ),
 
             const SizedBox(height: 4),
 
             Text(
               'Weight : ${animal.weight}',
-              style: const TextStyle(
-                fontSize: 11,
-                color: Color(0xFF555555),
-              ),
+              style: const TextStyle(fontSize: 11, color: Color(0xFF2D2D2D)),
             ),
 
             const SizedBox(height: 14),
@@ -130,30 +116,26 @@ class DetailPage extends StatelessWidget {
             Wrap(
               spacing: 5,
               runSpacing: 5,
-              children: animal.activities.map(
-                (activity) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 10,
-                      vertical: 7,
+              children: animal.activities.map((activity) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFBFF),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: const Color(0xFFD8D1D8)),
+                  ),
+                  child: Text(
+                    activity,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: Color(0xFF2D2D2D),
                     ),
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFFFFBFF),
-                      borderRadius: BorderRadius.circular(6),
-                      border: Border.all(
-                        color: const Color(0xFFD8D1D8),
-                      ),
-                    ),
-                    child: Text(
-                      activity,
-                      style: const TextStyle(
-                        fontSize: 10,
-                        color: Color(0xFF555055),
-                      ),
-                    ),
-                  );
-                },
-              ).toList(),
+                  ),
+                );
+              }).toList(),
             ),
           ],
         ),

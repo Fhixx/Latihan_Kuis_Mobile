@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_latihan_kuis_mobile/pages/detail.dart';
 import '../models/animals_data.dart';
 import '../pages/login.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
@@ -10,27 +11,28 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xFFFFF8FF),
       appBar: AppBar(
-        backgroundColor: Colors.black45,
+        backgroundColor: Colors.black87,
         elevation: 0,
         title: Text(
           "Animal List",
-          style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
         ),
 
         actions: [
           IconButton(
-          onPressed: (){
-            Navigator.pushAndRemoveUntil(
-            context, 
-              MaterialPageRoute(builder: (context)=>LoginPage()), 
-              (route)=> false
-            );
-          },
-          icon: const Icon(
-            Icons.logout,
-            color: Colors.white,
-            ),
-          )
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (route) => false,
+              );
+            },
+            icon: const Icon(Icons.logout, color: Colors.white),
+          ),
         ],
       ),
 
@@ -43,12 +45,10 @@ class HomePage extends StatelessWidget {
           crossAxisSpacing: 10,
           mainAxisSpacing: 8,
           childAspectRatio: 0.82,
-        ), 
+        ),
         itemBuilder: (context, index) {
           final Animal animal = dummyAnimals[index];
-          return AnimalCard(
-            animal: animal,
-          );
+          return AnimalCard(animal: animal);
         },
       ),
     );
@@ -58,118 +58,98 @@ class HomePage extends StatelessWidget {
 class AnimalCard extends StatelessWidget {
   final Animal animal;
 
-  const AnimalCard({
-    super.key,
-    required this.animal,
-  });
+  const AnimalCard({super.key, required this.animal});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       borderRadius: BorderRadius.circular(12),
 
-      // =================================
       // AKSI KETIKA CARD DITEKAN
-      // =================================
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(
-            builder: (context) => DetailPage(
-              animal: animal,
-            ),
-          ),
+          MaterialPageRoute(builder: (context) => DetailPage(animal: animal)),
         );
       },
-    
-    child: Card(
-      elevation: 1,
-      margin: EdgeInsets.zero,
-      color: const Color(0xFFFFF9FF),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(12),
-        side: const BorderSide(
-          color: Color(0xFFE0D8E0),
-          width: 1,
+
+      child: Card(
+        elevation: 1,
+        margin: EdgeInsets.zero,
+        color: const Color(0xFFFFF9FF),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+          side: const BorderSide(color: Color(0xFFE0D8E0), width: 1),
         ),
-      ),
 
-      child: Padding(
-        padding: const EdgeInsets.all(8),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              // IMAGE
+              SizedBox(
+                height: 92,
+                width: double.infinity,
 
-            // IMAGE
-            SizedBox(
-              height: 92,
-              width: double.infinity,
-              child: Center(
-                child: Image.network(
-                  animal.image,
-                  height: 92,
-                  fit: BoxFit.contain,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
 
-                  errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
-                      Icons.image_not_supported,
-                      size: 40,
-                      color: Colors.grey,
-                    );
-                  },
+                  child: Image.network(
+                    animal.image,
+                    height: 92,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
 
-                  loadingBuilder: (
-                    context,
-                    child,
-                    loadingProgress,
-                  ) {
-                    if (loadingProgress == null) {
-                      return child;
-                    }
+                    errorBuilder: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.image_not_supported,
+                        size: 40,
+                        color: Colors.grey,
+                      );
+                    },
 
-                    return const Center(
-                      child: CircularProgressIndicator(
-                        strokeWidth: 2,
-                      ),
-                    );
-                  },
+                    loadingBuilder: (context, child, loadingProgress) {
+                      if (loadingProgress == null) {
+                        return child;
+                      }
+
+                      return const Center(
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
+              const SizedBox(height: 6),
 
-            const SizedBox(height: 6),
-
-            // NAMA HEWAN
-            Text(
-              animal.name,
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: const TextStyle(
-                fontSize: 13,
-                fontWeight: FontWeight.bold,
-                color: Color(0xFF2D2D2D),
+              // NAMA HEWAN
+              Text(
+                animal.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: const TextStyle(
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  color: Color(0xFF2D2D2D),
+                ),
               ),
-            ),
 
-            const SizedBox(height: 2),
+              const SizedBox(height: 2),
 
-            // TYPE
-            Text(
-              animal.type,
-              style: const TextStyle(
-                fontSize: 11,
-                color: Color(0xFF9A929A),
+              // TYPE
+              Text(
+                animal.type,
+                style: const TextStyle(fontSize: 11, color: Color(0xFF9A929A)),
               ),
-            ),
 
-            const SizedBox(height: 6),
+              const SizedBox(height: 6),
 
-            // HABITAT
-            Wrap(
-              spacing: 5,
-              runSpacing: 4,
-              children: animal.habitat.map(
-                (habitat) {
+              // HABITAT
+              Wrap(
+                spacing: 5,
+                runSpacing: 4,
+                children: animal.habitat.map((habitat) {
                   return Container(
                     padding: const EdgeInsets.symmetric(
                       horizontal: 10,
@@ -179,9 +159,7 @@ class AnimalCard extends StatelessWidget {
                     decoration: BoxDecoration(
                       color: const Color(0xFFFFFBFF),
                       borderRadius: BorderRadius.circular(7),
-                      border: Border.all(
-                        color: const Color(0xFFD8D1D8),
-                      ),
+                      border: Border.all(color: const Color(0xFFD8D1D8)),
                     ),
 
                     child: Text(
@@ -193,13 +171,12 @@ class AnimalCard extends StatelessWidget {
                       ),
                     ),
                   );
-                },
-              ).toList(),
-            ),
-          ],
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
-    )
     );
   }
 }
