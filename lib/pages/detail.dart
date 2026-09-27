@@ -99,9 +99,54 @@ class DetailPage extends StatelessWidget {
               style: const TextStyle(fontSize: 11, color: Color(0xFF2D2D2D)),
             ),
 
+            const SizedBox(height: 4),
+
+            Text(
+              'Type     : ${animal.type}',
+              style: const TextStyle(fontSize: 11, color: Color(0xFF2D2D2D)),
+            ),
+
             const SizedBox(height: 14),
 
             // ACTIVITIES
+            const Text(
+              'Habitat',
+              style: TextStyle(
+                fontSize: 12,
+                fontWeight: FontWeight.bold,
+                color: Color(0xFF333333),
+              ),
+            ),
+
+            const SizedBox(height: 6),
+
+            Wrap(
+              spacing: 5,
+              runSpacing: 5,
+              children: animal.habitat.map((activity) {
+                return Container(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 7,
+                  ),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFFFFBFF),
+                    borderRadius: BorderRadius.circular(6),
+                    border: Border.all(color: const Color(0xFFD8D1D8)),
+                  ),
+                  child: Text(
+                    activity,
+                    style: const TextStyle(
+                      fontSize: 10,
+                      color: Color(0xFF2D2D2D),
+                    ),
+                  ),
+                );
+              }).toList(),
+            ),
+
+            const SizedBox(height: 14),
+
             const Text(
               'Animal Activities',
               style: TextStyle(
